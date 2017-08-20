@@ -3,29 +3,31 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h1>/r/javascript scraper</h1>
+        <h4>SAVED ARTICLES</h4>
       </div>
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container-fluid">
   <div class="row"> 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="container articlesContainer">
         <div class="col-xs-12" id="articles">
           <div class="text-center animated pulse infinite emtpyPlaceholder">
-            <h3>CLICK THE <span id="saveText">SAVE ARTICLE </span>BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
+            <h3>CLICK THE<span id="saveText">SAVE ARTICLE</span>BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
           </div>
           {{#each article}}
             {{#if this.saved}}  
               <!-- Only display articles that have been SAVED -->
               <div class="panel panel-default mongoArticles">
                 <div class="panel-heading clearfix">
+                  <h3 class="panel-title pull-left">{{this.title}}</h3>
                   <div class="pull-right">
                       <!-- add Mongo _id for each article so that it can be targeted for saving -->
                     <button type="button" class="btn btn-success addNoteButton" id="{{this._id}}">ADD NOTE</button>
                     <button type="button" class="btn btn-danger deleteButton" id="{{this._id}}">DELETE ARTICLE</button>
                   </div>
-                  <h3 class="panel-title">{{this.title}}</h3>
+                  
                 </div>
                 <div class="panel-body text-center">
                   <a href="{{this.link}}" target="_blank">CLICK TO READ ARTICLE</a>

@@ -1,16 +1,5 @@
 *, *:after, *::before { box-sizing: border-box; }
 
-@font-face {
-	font-weight: normal;
-	font-style: normal;
-	font-family: 'icomoon';
-	src:url('../fonts/icomoon/icomoon.eot');
-	src:url('../fonts/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/icomoon/icomoon.ttf') format('truetype'),
-		url('../fonts/icomoon/icomoon.woff') format('woff'),
-		url('../fonts/icomoon/icomoon.svg#icomoon') format('svg');
-}
-
 .progress-button {
 	position: relative;
 	display: inline-block;
@@ -65,8 +54,41 @@ li {
   font-size: 40px;
 }
 
+h3.panel-title {
+  max-width: 55%;
+}
 
-/* Buzz Out */
+
+/* ================== Media Queries ======================= */
+
+@media (max-width:650px) {
+  
+    h3.panel-title {
+      max-width: 100%;
+      float: none;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .pull-right, .pull-left {
+      float: none !important;
+      text-align: center;
+    }
+
+    
+  
+  
+  }
+
+
+
+
+
+
+
+
+
+/* Buzz Out Animation on Reddit Icon */
 @-webkit-keyframes hvr-buzz-out {
   10% {
     -webkit-transform: translateX(3px) rotate(2deg);
@@ -169,7 +191,8 @@ li {
   animation-iteration-count: 1;
 }
 
-/* Pulse Animation */
+
+/* Pulse Animation Message on Blank Pages */
 .animated {
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -227,3 +250,6 @@ li {
     transform: scale3d(1, 1, 1);
   }
 }
+
+
+

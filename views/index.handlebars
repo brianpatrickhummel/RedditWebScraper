@@ -20,11 +20,11 @@
             <!-- Only display articles that have not been SAVED -->
               <div class="panel panel-default mongoArticles">
                 <div class="panel-heading clearfix">
+                  <h3 class="panel-title">{{this.title}}</h3>
                   <div class="pull-right">
                       <!-- add Mongo _id for each article so that it can be targeted for saving -->
                     <button type="button" class="btn btn-success saveButton" id="{{this._id}}">SAVE ARTICLE</button>
                   </div>
-                  <h3 class="panel-title">{{this.title}}</h3>
                 </div>
                 <div class="panel-body text-center">
                   <a href="{{this.link}}" target="_blank">CLICK TO READ ARTICLE</a>
