@@ -21,60 +21,37 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   </head>
   <body>
-
-<nav class="navbar navbar-default" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-  </div>
-
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse text-center">
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="/"><i class="fa fa-reddit-alien fa-2x hvr-buzz-out" aria-hidden="true"></i></a>
-      </li>
-      <li>
-        <a href="/savedArticles" class="saved"><span class="content savedText">SAVED ARTICLES</span></a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <button class="progress-button scrapeButton" data-style="shrink" data-perspective data-horizontal>
-          <span class="content">SCRAPE!</span>
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
         </button>
-      </li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
-<div class="jumbotron">
-  <div class="container text-center">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h1>/r/javascript scraper</h1>
       </div>
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="row"> 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="container articlesContainer">
-        <div class="col-xs-12" id="articles">
-          <div class="text-center animated pulse infinite emtpyPlaceholder">
-            <h3>CLICK THE SCRAPE BUTTON TO LOAD ARTICLES</h3>
-          </div>
-          {{{body}}}
-        </div> 
-      </div>
-    </div>   
-  </div>
-</div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse text-center">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="/"><i class="fa fa-reddit-alien fa-2x hvr-buzz-out" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <a href="/savedArticles" class="saved"><span class="content savedText">SAVED ARTICLES</span></a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <button class="progress-button scrapeButton" data-style="shrink" data-perspective data-horizontal>
+              <span class="content">SCRAPE!</span>
+            </button>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+    {{{body}}}
       <!-- Custom JS -->
     <script src="/assets/js/app.js"></script>
   </body>
