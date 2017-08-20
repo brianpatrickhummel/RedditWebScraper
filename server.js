@@ -24,6 +24,7 @@ app.set('view engine', 'handlebars');
 
 //=================== Mongoose ===================
 // Set Mongoose to leverage built in JavaScript ES6 Promises
+var Promise = require('bluebird');
 mongoose.Promise = Promise;
 // Database configuration with mongoose
 var uristring = /* "mongodb://heroku_52ft34g8:dt67ql648ors7978n91vie8k03@ds149603.mlab.com:49603/heroku_52ft34g8" ||  */
@@ -44,7 +45,6 @@ db.once("open", function() {
 //=================================================
 
 // Routes
-require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 
 app.listen(PORT, function () {

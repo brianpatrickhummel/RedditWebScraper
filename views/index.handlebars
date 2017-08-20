@@ -1,20 +1,39 @@
-<div class="jumbotron">
-  <div class="container">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <a class="navbar-brand" href="#">Mongo Scraper</a>
-      <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/savedArticles">Saved Articles</a>
-        </li>
-        <li>
-          <button type="button" class="btn btn-lg btn-danger scrapeButton">Scrape New Articles</button>
-        </li>
-      </ul>
-    </nav>
+
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
   </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse text-center">
+    <ul class="nav navbar-nav">
+      <li class="active">
+        <a href="/"><i class="fa fa-reddit-alien fa-2x hvr-buzz-out" aria-hidden="true"></i></a>
+      </li>
+      <li>
+        <a href="/savedArticles" class="saved"><span class="content savedText">SAVED ARTICLES</span></a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <button class="progress-button scrapeButton" data-style="shrink" data-perspective data-horizontal>
+          <span class="content">SCRAPE!</span>
+        </button>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+
+
+
+<div class="jumbotron">
   <div class="container text-center">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -27,6 +46,25 @@
   <div class="row"> 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
        <div class="container articlesContainer">
+         <div class="col-xs-12" id="articles">
+           <div class="text-center animated pulse infinite emtpyPlaceholder">
+             <h3>CLICK THE SCRAPE BUTTON TO LOAD ARTICLES</h3>
+           </div>
+           {{#each article}}
+             <!-- add Mongo _id for each article so that it can be targeted for deletion -->
+            <div class="panel panel-default mongoArticles" id="{{this._id}}">
+              <div class="panel-heading clearfix">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-success saveButton">SAVE ARTICLE</button>
+                </div>
+                <h3 class="panel-title">{{this.title}}</h3>
+              </div>
+              <div class="panel-body text-center">
+                <a href="{{this.link}}" target="_blank">CLICK TO READ ARTICLE</a>
+              </div>
+            </div>
+           {{/each}}
+         </div> 
       </div>
     </div>   
   </div>
