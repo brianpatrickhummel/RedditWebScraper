@@ -9,7 +9,6 @@ module.exports = function(app) {
   // Scrape data and add to MongoDB
   app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
-    var numArticles;
     request("https://www.reddit.com/r/javascript/", function(error, response, html) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(html);
@@ -52,7 +51,7 @@ module.exports = function(app) {
                   // Or log the doc
                   else {
                     console.log(doc);
-                    numArticles++;
+                    // ================= ??????????????????????????????????? =================
                   }
                 });
               }
@@ -61,10 +60,12 @@ module.exports = function(app) {
         // Calling the duplicate checking function and passing in new Article instance
         duplicateCheck(entry);
       })
+      // ================= ????????????????request RES ??????????????????? =================
     })
+    // ================= ???????????????? Get RES ??????????????????? =================
   });
 
-  // This will get the articles we scraped from the mongoDB
+  // Get ALL articles scraped from the mongoDB
   app.get("/", function(req, res) {
     // Grab every doc in the Articles array
     Article.find({}, function(error, doc) {
@@ -74,10 +75,63 @@ module.exports = function(app) {
       }
       // Or send the doc to the browser as a json object
       else {
-        console.log("sending articles");
         var articles = {article: doc};
         res.render("index", articles )
       }
     });
-});
+  });
+
+  // Save an article
+  app.put("/save/:id", function(req, res) {
+    // Find article based on ID passed with req on POST and mark as having been SAVED
+    Article.update({"_id": req.params.id}, { $set: { saved: true }}, function(error, doc) {
+      // Log any errors
+      if (error) {
+        console.log(error);
+      }
+      else {
+        // ================= ??????????????????????????????????? =================
+      }
+    });
+    // ================= ????????????? PUT RES ??????????????????? =================
+  });
+
+  // Get SAVED articles
+  app.get("/savedArticles", function(req, res) {
+    Article.find({}, function(error, doc) {
+      // Log any errors
+      if (error) {
+        console.log(error);
+      }
+      else {
+        var articles = {article: doc};
+        res.render("saved", articles )
+      }
+    });
+  });
+
+   // Delete selected Article
+   app.delete("/delete/:id", function(req, res) {
+    Article.remove({"_id": req.params.id}, function(error, doc) {
+      // Log any errors
+      if (error) {
+        console.log(error);
+      }
+      else {
+        var articles = {article: doc};
+        res.render("saved", articles )
+      }
+    });
+  });
+
+  // Add/Update Note
+
+ 
+
+  // Delete selected Note
+
+
+
+
+
 }
