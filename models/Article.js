@@ -7,17 +7,18 @@ var Schema = mongoose.Schema;
 var ArticleSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   link: {
     type: String,
     required: true
   },
   // This only saves one note's ObjectId, ref refers to the Note model
-  note: {
+  note: [{
     type: Schema.Types.ObjectId,
     ref: "Note"
-  },
+  }],
   saved: {
     type: Boolean,
     default: false

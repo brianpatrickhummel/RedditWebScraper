@@ -1,40 +1,38 @@
 <div class="jumbotron">
   <div class="container text-center">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h1>/r/javascript scraper</h1>
-      </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h1 id="jumboText">/r/javascript scraper</h1>
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container main">
   <div class="row"> 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="container articlesContainer">
-        <div class="col-xs-12" id="articles">
+    <div class="container articlesContainer col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+      <div id="articles">
+        {{#unless article}}
           <div class="text-center animated pulse infinite emtpyPlaceholder">
-            <h3>CLICK THE<span id="saveText">SCRAPE BUTTON</span>TO LOAD ARTICLES</h3>
+            <h3>CLICK THE <span id="saveText">SCRAPE BUTTON</span> TO LOAD ARTICLES</h3>
           </div>
-          {{#each article}}
-            {{#unless this.saved}}  
-            <!-- Only display articles that have not been SAVED -->
-              <div class="panel panel-default mongoArticles">
-                <div class="panel-heading clearfix">
-                  <h3 class="panel-title">{{this.title}}</h3>
-                  <div class="pull-right">
-                      <!-- add Mongo _id for each article so that it can be targeted for saving -->
-                    <button type="button" class="btn btn-success saveButton" id="{{this._id}}">SAVE ARTICLE</button>
-                  </div>
-                </div>
-                <div class="panel-body text-center">
-                  <a href="{{this.link}}" target="_blank">CLICK TO READ ARTICLE</a>
-                </div>
+        {{/unless}}
+        {{#each article}}
+          {{#unless this.saved}}  
+          <!-- Only display articles that have not been SAVED -->
+            <div class="panel panel-default mongoArticles">
+              <div class="panel-heading ">
+                <h3 class="panel-title text-center">{{this.title}}</h3>
               </div>
-            {{/unless}}
-          {{/each}}
-        </div> 
-      </div>
-    </div>   
+              <div class="panel-body text-center">
+                <button type="button" class="btn saveButton hvr-bounce-to-left" id="{{this._id}}">SAVE ARTICLE</button>
+                <button type="button" class="btn readButton hvr-bounce-to-left" id="{{this._id}}">
+                  <a href="http://{{this.link}}" target="_blank">READ ARTICLE</a>
+                </button>
+      
+              </div>
+            </div>
+          {{/unless}}
+        {{/each}}
+      </div> 
+    </div>  
   </div>
 </div>
        
