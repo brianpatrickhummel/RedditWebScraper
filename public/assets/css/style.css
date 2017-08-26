@@ -4,6 +4,22 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "GatsbyFLF-Bold";
+  src: url(../fonts/GatsbyFLF-Bold.ttf);
+}
+
+@font-face {
+  font-family: "GatsbyFLF";
+  src: url(../fonts/GatsbyFLF.ttf);
+}
+
+
+
+body {
+  font-family: "GatsbyFLF-Bold";
+}
+
 .progress-button {
   position: relative;
   display: inline-block;
@@ -21,6 +37,14 @@
 
 h1 {
   margin: 10px 0;
+  font-size: 83px !important;
+  letter-spacing: 1em;
+  text-indent: .5em;
+}
+
+h5 {
+  letter-spacing: 1.1em;
+  text-indent: .5em;
 }
 
 .navbar {

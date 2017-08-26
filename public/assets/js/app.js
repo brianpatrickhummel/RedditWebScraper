@@ -80,9 +80,9 @@ $('#addNoteModal').on('show.bs.modal', function (event) {
           '</div>' +
           '</div>' +
           '</div>';
-        $(".modal-body").append(newdiv);
+        $(".form-group").prepend(newdiv);
       }
-      // Remove placeholder text if a note is present on page
+      // *************** If note is present, remove placeholder text ***************
       if (document.querySelector(".noteEntry")) {
         $('.notePlaceholder').remove();
       }
