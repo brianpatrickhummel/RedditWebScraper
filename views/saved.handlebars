@@ -28,6 +28,7 @@
                       <a href="http://{{this.link}}" target="_blank">READ ARTICLE</a>
                     </button>
                       <!-- add Mongo _id for each article so that it can be targeted for saving -->
+                      <!-- also sets each VIEW NOTES button as a trigger for the Bootstrap Modal-->
                     <button type="button" class="btn btn-success addNoteButton hvr-bounce-to-left" id="{{this._id}}" data-toggle="modal" data-target="#addNoteModal" data-id="{{this._id}}">VIEW NOTES</button>
                     <button type="button" class="btn btn-danger deleteButton hvr-bounce-to-left" id="{{this._id}}">DELETE ARTICLE</button>
                   </div>
@@ -35,7 +36,7 @@
               </div>
             {{/if}}
           {{/each}}
-          <!-- Modal Dialog Box -->
+          <!-- Boostrap Modal Dialog Box -->
           <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -48,7 +49,7 @@
                 <div class="modal-body">
                   <p class="notePlaceholder text-center">No Saved Notes For This Article Just Yet</p>
 
-                  <!-- panels to be created for each note via Ajax callback if notes exist -->
+                  <!-- panels to be jQuery inserted for each note linked to article via app.js-->
 
                   <div class="form-group">
                     <label for="comment">Create a note for this article:</label>

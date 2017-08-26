@@ -13,7 +13,7 @@ module.exports = function (app) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(html);
       // Now, we grab every <p> with a class = "title" and do the following....
-      
+
       $("p.title").each(function (i, element) {
         // Save an empty result object
         var articleResult = {};
@@ -86,17 +86,17 @@ module.exports = function (app) {
     Article.find({})
       .populate("note")
       // now, execute our query
-      .exec(function(error, doc) {
-      // Log any errors
-      if (error) {
-        console.log(error);
-      }
-      else {
-        var articles = { article: doc };
-        res.render("saved", articles)
-        // console.log(articles[0].note);
-      }
-    });
+      .exec(function (error, doc) {
+        // Log any errors
+        if (error) {
+          console.log(error);
+        }
+        else {
+          var articles = { article: doc };
+          res.render("saved", articles)
+          // console.log(articles[0].note);
+        }
+      });
   });
 
   // Save an article
@@ -116,13 +116,13 @@ module.exports = function (app) {
 
   // Delete selected Article
   app.delete("/delete/:id", function (req, res) {
-    Article.findById({"_id": req.params.id}, function(err, object){
-      if (err) { console.error(err) }  
+    Article.findById({ "_id": req.params.id }, function (err, object) {
+      if (err) { console.error(err) }
       else {
         var notes = object.note;
         for (var i = 0; i < notes.length; i++) {
           var noteId = notes[i];
-          Note.remove({"_id": noteId}, function (error, doc) {
+          Note.remove({ "_id": noteId }, function (error, doc) {
             if (error) {
               console.log(error);
             }
@@ -143,13 +143,13 @@ module.exports = function (app) {
     });
     res.sendStatus(200);
   });
-  
+
 
   // Add/Update Note
   app.put("/saveNote/:id", function (req, res) {
     var newNote = new Note(req.body);
 
-    newNote.save(function(error, doc) {
+    newNote.save(function (error, doc) {
       // Log any errors
       if (error) {
         console.log(error);
@@ -159,17 +159,17 @@ module.exports = function (app) {
       else {
         // Use the article id to find and update it's note
         Article.findByIdAndUpdate(req.params.id, { $push: { "note": doc._id } }, { new: true })
-        // Execute the above query
-        .exec(function(err, doc) {
-          // Log any errors
-          if (err) {
-            console.log(err);
-          }
-          else {
-            var note = {"Note": doc};
-            res.render("saved", note);
-          }
-        });
+          // Execute the above query
+          .exec(function (err, doc) {
+            // Log any errors
+            if (err) {
+              console.log(err);
+            }
+            else {
+              var note = { "Note": doc };
+              res.render("saved", note);
+            }
+          });
       }
     });
 
@@ -179,12 +179,12 @@ module.exports = function (app) {
   // Delete selected Note
   app.delete("/deleteNote/:deleteId/:articleId", function (req, res) {
     Note.findOneAndRemove({ "_id": req.params.deleteId })
-      .exec(function(err, removed){
+      .exec(function (err, removed) {
         Article.findOneAndUpdate(
-          {"_id": req.params.articleId},
-          { $pull: {note: req.params.deleteId}},
+          { "_id": req.params.articleId },
+          { $pull: { note: req.params.deleteId } },
           { new: true },
-          function(err, removedFromArticle) {
+          function (err, removedFromArticle) {
             if (err) { console.error(err) }
             res.status(200).send(removedFromArticle)
           })
@@ -194,20 +194,19 @@ module.exports = function (app) {
 
   // Get Single Article Notes
   app.get("/singleArticleNotes/:id", function (req, res) {
-    Article.findById({"_id": req.params.id})
+    Article.findById({ "_id": req.params.id })
       .populate("note")
       // now, execute our query
-      .exec(function(error, doc) {
-      // Log any errors
-      if (error) {
-        console.log(error);
-      }
-      else {
-        console.log(doc);
-        res.json(doc);
-        console.log("server-side return of article with notes" + doc.note);
-      }
-    });
+      .exec(function (error, doc) {
+        // Log any errors
+        if (error) {
+          console.log(error);
+        }
+        else {
+          res.json(doc);
+          // console.log("server-side return of article with notes" + doc.note);
+        }
+      });
   });
 
 

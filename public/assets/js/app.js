@@ -5,7 +5,7 @@ if (document.querySelector(".mongoArticles")) {
 }
 
 
-// Button click to Intialize Scraping
+//*************** Button click to Intialize Scraping ***************
 $(document).on("click", ".scrapeButton", function () {
   $.ajax({
     method: "GET",
@@ -16,7 +16,7 @@ $(document).on("click", ".scrapeButton", function () {
     });
 });
 
-// Button click to Save an Article
+//*************** Button click to Save an Article ***************
 $(document).on("click", ".saveButton", function () {
   var thisId = $(this).attr("id");
   $.ajax({
@@ -29,7 +29,7 @@ $(document).on("click", ".saveButton", function () {
     });
 });
 
-// Button click to Delete an Article
+//*************** Button click to Delete an Article ***************
 $(document).on("click", ".deleteButton", function () {
   var thisId = $(this).attr("id");
   $.ajax({
@@ -43,59 +43,49 @@ $(document).on("click", ".deleteButton", function () {
 });
 
 
-// Button click to Modify Notes
+//*************** Button click to View/Add/Delete Notes ***************
+// When the Bootstrap modal is triggered...
 $('#addNoteModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var articleId = button.data('id') // Extract info from data-* attributes
-  console.log("client-side: clicked button id= " + articleId);
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  // Identify Button that triggered the modal
+  var button = $(event.relatedTarget) 
+  // Extract article id from data-id attribute
+  var articleId = button.data('id') 
+  // console.log("client-side: clicked button id= " + articleId);
+
+  // Get a single article including it's notes
   $.ajax({
     method: "GET",
     url: "/singleArticleNotes/" + articleId
   })
     .done(function (result) {
-      console.log("client-side receipt of article with notes" + result);
-      // jQuery update the Modal
+      // jQuery update the Bootstrap Modal
       for (var i = 0; i < result.note.length; i++) {
         var jsonReturn = JSON.stringify(result.note[i]);
         var Note = result.note[i];
-        console.log("Note #" + i + " is: " + jsonReturn);
-        var newdiv = 
-        '<div class="panel panel-default">' +
-        '<div class="panel-body text-center">' +
+        var newdiv =
+          '<div class="panel panel-default">' +
+          '<div class="panel-body text-center">' +
           '<div class="panel panel-default noteEntry">' +
-              '<div class="panel-heading">' +
-                '<h3 class="panel-title noteBody" >' +
-                  Note.body +
-                  '</h3>' +
-              '</div>' +
-              '<div class="panel-body">' +
-                
-                '<button type="button" class="btn btn-danger deleteNoteButton hvr-bounce-to-left id="' + Note._id + '">DELETE NOTE</button>' +
-              '</div>' +
+          '<div class="panel-heading">' +
+          '<h3 class="panel-title noteBody" >' +
+          Note.body +
+          '</h3>' +
           '</div>' +
-        '</div>' +
-      '</div>';
-      $(".modal-body").append(newdiv);
-      // $(".noteBody").text(Note.body);
-      // $(".deleteNoteButton").attr("id", Note._id);
-        
+          '<div class="panel-body">' +
+
+          '<button type="button" class="btn btn-danger deleteNoteButton hvr-bounce-to-left" id="' + Note._id + '">DELETE NOTE</button>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+        $(".modal-body").append(newdiv);
       }
-      if (document.querySelector(".noteEntry")){
+      // Remove placeholder text if a note is present on page
+      if (document.querySelector(".noteEntry")) {
         $('.notePlaceholder').remove();
       }
-      
-        
-      
 
-
-
-  
-
-      
-
-       // Button click to Save a Note
+      // *************** Button click to Save a Note ***************
       $(document).on("click", ".saveNoteButton", function () {
         $.ajax({
           method: "PUT",
@@ -109,42 +99,29 @@ $('#addNoteModal').on('show.bs.modal', function (event) {
             // clear the typed note
             $("#comment").val("");
             window.location.href = "/savedArticles";
-            
-        });
+          });
       })
 
-
+      // *************** Button click to Delete a Note ***************
+      $(".deleteNoteButton").on("click", function () {
+        var deleteId = $(this).attr("id");
+        console.log("Note ID to be deleted: " + deleteId);
+        $.ajax({
+          method: "DELETE",
+          url: "/deleteNote/" + deleteId + "/" + articleId,
+        })
+          .done(function () {
+            window.location.href = "/savedArticles";
+          });
+      });
     });
-  
-    
-  // var modal = $(this)
-  // modal.find('.modal-title').text('New message to ' + recipient)
-  // modal.find('.modal-body input').val(recipient)
-
-
-// Call the Modal
-  // $('#addNoteModal').modal(options)
-
-
-  if (document.querySelector(".noteEntry")){
-    $('.notePlaceholder').remove();
-  }
-})
+});
 
 
 
- 
 
-    
-  // Button click to Delete a Note
-  $(document).on("click", ".deleteNoteButton", function () {
-    var deleteId = $(this).attr("id");
-    $.ajax({
-      method: "DELETE",
-      url: "/deleteNote/" + deleteId + "/" + articleId,
-    })
-    .done(function () {
-      window.location.href = "/savedArticles";
-    });
 
-  });
+
+
+
+
