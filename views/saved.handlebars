@@ -10,8 +10,8 @@
 </div>
 <div class="container-fluid">
   <div class="row"> 
-      <div class="container articlesContainer col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-        <div class="col-xs-12" id="articles">
+      <div class="container articlesContainer col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+        <div id="articles">
           {{#unless article}}
             <div class="text-center animated pulse infinite emtpyPlaceholder">
               <h3>CLICK THE <span id="saveText">SAVE ARTICLE</span> BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
@@ -28,7 +28,7 @@
                       <a href="http://{{this.link}}" target="_blank">READ ARTICLE</a>
                     </button>
                       <!-- add Mongo _id for each article so that it can be targeted for saving -->
-                    <button type="button" class="btn btn-success addNoteButton hvr-bounce-to-left" id="{{this._id}}" data-toggle="modal" data-target="#addNoteModal">ADD NOTE</button>
+                    <button type="button" class="btn btn-success addNoteButton hvr-bounce-to-left" id="{{this._id}}" data-toggle="modal" data-target="#addNoteModal" data-id="{{this._id}}">VIEW NOTES</button>
                     <button type="button" class="btn btn-danger deleteButton hvr-bounce-to-left" id="{{this._id}}">DELETE ARTICLE</button>
                   </div>
                 </div>
@@ -41,24 +41,23 @@
               <div class="modal-content">
                 <div class="modal-header text-center">
                   <h5 class="modal-title" id="exampleModalLabel">ARTICLE NOTES</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close closed" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="panel panel-default">
-                    <div class="panel-body text-center notePlaceholder">
-                      There Are No Saved Notes For This Article Yet 
-                    </div>
-                  </div>
+                  <p class="notePlaceholder text-center">No Saved Notes For This Article Just Yet</p>
+
+                  <!-- panels to be created for each note via Ajax callback if notes exist -->
+
                   <div class="form-group">
                     <label for="comment">Create a note for this article:</label>
                     <textarea class="form-control" rows="5" id="comment"></textarea>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-success savveNoteButton">SAVE NOTE</button>
+                  <button type="button" class="btn btn-success saveNoteButton hvr-bounce-to-left">SAVE NOTE</button>
+                  <button type="button" class="closed btn btn-secondary hvr-bounce-to-left" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>

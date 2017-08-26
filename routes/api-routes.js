@@ -29,7 +29,7 @@ module.exports = function (app) {
         var domain = $(this).children('.domain').text();
         // if <a> redirects to js subreddit, prepend reddit domain and reassign to var
         if (domain === "(self.javascript)") {
-          articleResult.link = "www.reddit.com" + articleResult.link;
+          articleResult.link = "http://www.reddit.com" + articleResult.link;
         }
 
         // Using our Article model, create a new entry
@@ -41,7 +41,7 @@ module.exports = function (app) {
         function duplicateCheck(article) {
           Article.find({ title: article.title }, function (err, article) {
             if (article.length) {
-              console.log("duplicate article, not added");
+              // console.log("duplicate article, not added");
             } else {
               // Article is not a duplcate, save it to DB
               entry.save(function (err, article) {
@@ -51,7 +51,7 @@ module.exports = function (app) {
                 }
                 // Or log the doc
                 else {
-                  console.log("article: ", article);
+                  // console.log("article: ", article);
                 }
               });
             }
@@ -83,7 +83,10 @@ module.exports = function (app) {
 
   // Get All Saved articles
   app.get("/savedArticles", function (req, res) {
-    Article.find({}, function (error, doc) {
+    Article.find({})
+      .populate("note")
+      // now, execute our query
+      .exec(function(error, doc) {
       // Log any errors
       if (error) {
         console.log(error);
@@ -91,6 +94,7 @@ module.exports = function (app) {
       else {
         var articles = { article: doc };
         res.render("saved", articles)
+        // console.log(articles[0].note);
       }
     });
   });
@@ -112,22 +116,105 @@ module.exports = function (app) {
 
   // Delete selected Article
   app.delete("/delete/:id", function (req, res) {
-    Article.remove({ "_id": req.params.id }, function (error, doc) {
+    Article.findById({"_id": req.params.id}, function(err, object){
+      if (err) { console.error(err) }  
+      else {
+        var notes = object.note;
+        for (var i = 0; i < notes.length; i++) {
+          var noteId = notes[i];
+          Note.remove({"_id": noteId}, function (error, doc) {
+            if (error) {
+              console.log(error);
+            }
+            else {
+              Article.remove({ "_id": req.params.id }, function (error, doc) {
+                // Log any errors
+                if (error) {
+                  console.log(error);
+                }
+                else {
+                  console.log("Note " + req.params.id + " was deleted")
+                }
+              });
+            }
+          });
+        };
+      }
+    });
+    res.sendStatus(200);
+  });
+  
+
+  // Add/Update Note
+  app.put("/saveNote/:id", function (req, res) {
+    var newNote = new Note(req.body);
+
+    newNote.save(function(error, doc) {
+      // Log any errors
+      if (error) {
+        console.log(error);
+        res.send("Please enter text before submitting");
+      }
+      // Otherwise
+      else {
+        // Use the article id to find and update it's note
+        Article.findByIdAndUpdate(req.params.id, { $push: { "note": doc._id } }, { new: true })
+        // Execute the above query
+        .exec(function(err, doc) {
+          // Log any errors
+          if (err) {
+            console.log(err);
+          }
+          else {
+            var note = {"Note": doc};
+            res.render("saved", note);
+          }
+        });
+      }
+    });
+
+  });
+
+
+  // Delete selected Note
+  app.delete("/deleteNote/:deleteId/:articleId", function (req, res) {
+    Note.findOneAndRemove({ "_id": req.params.deleteId })
+      .exec(function(err, removed){
+        Article.findOneAndUpdate(
+          {"_id": req.params.articleId},
+          { $pull: {note: req.params.deleteId}},
+          { new: true },
+          function(err, removedFromArticle) {
+            if (err) { console.error(err) }
+            res.status(200).send(removedFromArticle)
+          })
+      });
+  });
+
+
+  // Get Single Article Notes
+  app.get("/singleArticleNotes/:id", function (req, res) {
+    Article.findById({"_id": req.params.id})
+      .populate("note")
+      // now, execute our query
+      .exec(function(error, doc) {
       // Log any errors
       if (error) {
         console.log(error);
       }
       else {
-        var articles = { article: doc };
-        res.render("saved", articles)
+        console.log(doc);
+        res.json(doc);
+        console.log("server-side return of article with notes" + doc.note);
       }
     });
   });
 
-  // Add/Update Note
-
-
-
-  // Delete selected Note
 
 }
+
+
+
+
+
+
