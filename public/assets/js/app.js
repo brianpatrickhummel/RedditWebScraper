@@ -46,6 +46,8 @@ $(document).on("click", ".deleteButton", function () {
 //*************** Button click to View/Add/Delete Notes ***************
 // When the Bootstrap modal is triggered...
 $('#addNoteModal').on('show.bs.modal', function (event) {
+  // Removes the existing DOM Modal panels from previous query
+  $(".articleNotes").remove();
   // Identify Button that triggered the modal
   var button = $(event.relatedTarget) 
   // Extract article id from data-id attribute
@@ -63,7 +65,7 @@ $('#addNoteModal').on('show.bs.modal', function (event) {
         var jsonReturn = JSON.stringify(result.note[i]);
         var Note = result.note[i];
         var newdiv =
-          '<div class="panel panel-default">' +
+          '<div class="panel panel-default articleNotes">' +
           '<div class="panel-body text-center">' +
           '<div class="panel panel-default noteEntry">' +
           '<div class="panel-heading">' +

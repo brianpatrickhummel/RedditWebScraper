@@ -6,14 +6,13 @@ var Article = require("../models/Article.js");
 
 module.exports = function (app) {
 
-  // Scrape data and add to MongoDB
+  // ******************* Scrape data and add to MongoDB *******************
   app.get("/scrape", function (req, res) {
     // First, we grab the body of the html with request
     request("https://www.reddit.com/r/javascript/", function (error, response, html) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(html);
       // Now, we grab every <p> with a class = "title" and do the following....
-
       $("p.title").each(function (i, element) {
         // Save an empty result object
         var articleResult = {};
@@ -41,15 +40,13 @@ module.exports = function (app) {
         function duplicateCheck(article) {
           Article.find({ title: article.title }, function (err, article) {
             if (article.length) {
-              // console.log("duplicate article, not added");
+              console.log("duplicate article, not added");
             } else {
               // Article is not a duplcate, save it to DB
               entry.save(function (err, article) {
-                // Log any errors
                 if (err) {
                   console.log(err);
                 }
-                // Or log the doc
                 else {
                   // console.log("article: ", article);
                 }
@@ -60,20 +57,17 @@ module.exports = function (app) {
         // Calling the duplicate checking function and passing in new Article instance
         duplicateCheck(entry);
       })
-
       res.redirect('back');
     })
   });
 
-  // Get All scraped & unsaved articles from the mongoDB
+  // ******************* Get All Unsaved Articles *******************
   app.get("/", function (req, res) {
     // Grab every doc in the Articles array
     Article.find({}, function (error, doc) {
-      // Log any errors
       if (error) {
         console.log(error);
       }
-      // Or send the doc to the browser as a json object
       else {
         var articles = { article: doc };
         res.render("index", articles)
@@ -81,29 +75,26 @@ module.exports = function (app) {
     });
   });
 
-  // Get All Saved articles
+  // ******************* Get All Saved articles *******************
   app.get("/savedArticles", function (req, res) {
     Article.find({})
       .populate("note")
-      // now, execute our query
+      // now, execute query
       .exec(function (error, doc) {
-        // Log any errors
         if (error) {
           console.log(error);
         }
         else {
           var articles = { article: doc };
           res.render("saved", articles)
-          // console.log(articles[0].note);
         }
       });
   });
 
-  // Save an article
+  // ******************* Save an article *******************
   app.post("/save/:id", function (req, res) {
     // Find article based on ID passed with req on POST and mark as having been SAVED
     Article.update({ "_id": req.params.id }, { $set: { saved: true } }, function (error, doc) {
-      // Log any errors
       if (error) {
         console.log(error);
       }
@@ -111,15 +102,16 @@ module.exports = function (app) {
         res.render("index");
       }
     });
-    // ================= ????????????? PUT RES ??????????????????? =================
   });
 
-  // Delete selected Article
+  // ******************* Delete selected Article *******************
   app.delete("/delete/:id", function (req, res) {
+    //Find the specific article so we can access the associated Notes
     Article.findById({ "_id": req.params.id }, function (err, object) {
       if (err) { console.error(err) }
       else {
         var notes = object.note;
+        // Remove each associated Note from database
         for (var i = 0; i < notes.length; i++) {
           var noteId = notes[i];
           Note.remove({ "_id": noteId }, function (error, doc) {
@@ -127,8 +119,8 @@ module.exports = function (app) {
               console.log(error);
             }
             else {
+              // Now that all Notes are Removed, Remove the Article
               Article.remove({ "_id": req.params.id }, function (error, doc) {
-                // Log any errors
                 if (error) {
                   console.log(error);
                 }
@@ -145,23 +137,19 @@ module.exports = function (app) {
   });
 
 
-  // Add/Update Note
+  // ******************* Add New Note *******************
   app.put("/saveNote/:id", function (req, res) {
     var newNote = new Note(req.body);
-
     newNote.save(function (error, doc) {
-      // Log any errors
       if (error) {
+        // Error will be logged if text is not entered into textfield upon submit
         console.log(error);
-        res.send("Please enter text before submitting");
       }
-      // Otherwise
       else {
         // Use the article id to find and update it's note
         Article.findByIdAndUpdate(req.params.id, { $push: { "note": doc._id } }, { new: true })
           // Execute the above query
           .exec(function (err, doc) {
-            // Log any errors
             if (err) {
               console.log(err);
             }
@@ -172,7 +160,6 @@ module.exports = function (app) {
           });
       }
     });
-
   });
 
 
@@ -192,13 +179,12 @@ module.exports = function (app) {
   });
 
 
-  // Get Single Article Notes
+  // ******************* Get Single Article Notes *******************
   app.get("/singleArticleNotes/:id", function (req, res) {
     Article.findById({ "_id": req.params.id })
       .populate("note")
       // now, execute our query
       .exec(function (error, doc) {
-        // Log any errors
         if (error) {
           console.log(error);
         }
@@ -208,7 +194,6 @@ module.exports = function (app) {
         }
       });
   });
-
 
 }
 
