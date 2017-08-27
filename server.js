@@ -27,7 +27,7 @@ app.set('view engine', 'handlebars');
 var Promise = require('bluebird');
 mongoose.Promise = Promise;
 // Database configuration with mongoose
-var uristring = /* "mongodb://heroku_52ft34g8:dt67ql648ors7978n91vie8k03@ds149603.mlab.com:49603/heroku_52ft34g8" ||  */
+var uristring =  "mongodb://heroku_52ft34g8:dt67ql648ors7978n91vie8k03@ds149603.mlab.com:49603/heroku_52ft34g8" ||
                 "mongodb://localhost/mongoosecheerio";
 // New Mongoose connection logic                
 mongoose.connect(uristring, {

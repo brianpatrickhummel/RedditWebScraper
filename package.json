@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/brianpatrickhummel/mongooseCheerio.git"
   },
-  "author": "",
+  "author": "Brian Patrick Hummel",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/brianpatrickhummel/mongooseCheerio/issues"
