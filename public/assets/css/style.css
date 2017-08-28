@@ -14,12 +14,27 @@
   src: url(../fonts/GatsbyFLF.ttf);
 }
 
+@font-face{
+  font-family: "cassannet";
+  src: url("../fonts/../fonts/cassannet.ttf")
+}
+
+@font-face{
+  font-family: "Kano";
+  src: url("../fonts/../fonts/Kano.otf")
+}
+
+
 button {
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2em;
 }
 
 body {
   font-family: "GatsbyFLF-Bold";
+}
+
+.content {
+  letter-spacing: .3em;
 }
 
 .progress-button {
@@ -28,7 +43,7 @@ body {
   padding: 1px 60px;
   outline: none;
   border: none;
-  background: #1d9650;
+  background: rgba(1, 79, 19, 0.6);
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -38,16 +53,29 @@ body {
 }
 
 h1 {
-  margin: 10px 0;
-  font-size: 83px !important;
   letter-spacing: 1em;
-  text-indent: .5em;
+  text-indent: .8em;
+  margin: 0px;
 }
 
-h5 {
-  letter-spacing: 1.1em;
-  text-indent: .5em;
+i {
+  color: rgba(1, 79, 19, 0.6);
 }
+
+.headerArcs {
+  letter-spacing: 1.6em;
+  margin: 0px 10px;
+  font-size: 1em;
+  font-family: "cassannet";
+}
+
+.headerArcs2 {
+  letter-spacing: 1em;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+
 
 .navbar {
   margin-bottom: 0px;
@@ -79,8 +107,15 @@ li {
   margin-top: 8px;
 }
 
-.panel-heading {
+.panel-default>.panel-heading {
   padding: 20px 20px;
+  color: #FFF;
+  background-color: rgba(1, 79, 19, 0.5);
+  border-color: rgba(1, 79, 19, 0.1);
+}
+
+.panel-default {
+  border-color: rgba(1, 79, 19, 0.1);
 }
 
 #saveText {
@@ -89,14 +124,14 @@ li {
 
 .readButton {
   color: #fff;
-  background-color: #634712;
-  border-color: #5B4110;
+  background-color: rgba(106, 65, 11, 0.6);
+  border-color: rgba(130, 79, 15, 0.5);
 }
 
 .saveButton {
   color: #fff;
-  background-color: #1D9650;
-  border-color: #197F44;
+  background-color: rgba(106, 65, 11, 0.6);
+  border-color: rgba(130, 79, 15, 0.5);
 }
 
 a {
@@ -130,12 +165,29 @@ a:hover {
 
 h3.panel-title {
   margin-bottom: 20px;
+  font-size: 16px;
+  letter-spacing: .1em;
+  font-family: "Kano";
 }
 
+#jumboText {
+  font-size: 83px;
+}
 
 /* ================== Media Queries ======================= */
 
-@media (max-width:650px) {
+@media (max-width:767px) {
+  .navbar-right,
+  .navbar-nav {
+    margin: 0 auto;
+  }
+
+  #jumboText {
+    font-size: 63px;
+  }
+}
+
+@media screen and (max-width:650px) {
   h3.panel-title {
     max-width: 100%;
     float: none;
@@ -147,14 +199,35 @@ h3.panel-title {
     float: none !important;
     text-align: center;
   }
+
+  .headerArcs {
+    letter-spacing: .8em;
+    text-indent: .4em;
+    margin-bottom: 0px;
+    font-size: .8em;
+  }
+  
+  .headerArcs2 {
+    letter-spacing: .6em;
+    text-indent: .3em;
+    margin-top: -5px;
+    margin-bottom: 0px;
+    font-size: .8em;
+  }
+
+  h1 {
+    margin:15px 0 0 0;
+    letter-spacing: 1em;
+    text-indent: .5em;
+  }
+
+  #jumboText {
+    font-size: 43px;
+  }
+
 }
 
-@media (max-width:767px) {
-  .navbar-right,
-  .navbar-nav {
-    margin: 0 auto;
-  }
-}
+
 
 
 /* Buzz Out Animation on Reddit Icon */

@@ -4,6 +4,10 @@ if (document.querySelector(".mongoArticles")) {
   $(".emtpyPlaceholder").remove();
 }
 
+// CircleType.js
+var headerArc = new CircleType(document.getElementById('headerArc')).radius(1800);
+var headerArc2 = new CircleType(document.getElementById('headerArc2')).radius(1800);
+
 
 //*************** Button click to Intialize Scraping ***************
 $(document).on("click", ".scrapeButton", function () {
