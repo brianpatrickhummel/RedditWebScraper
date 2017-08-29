@@ -15,11 +15,15 @@ app.use(express.static('public'));
 app.use(logger("dev"));
 // Body-Parser Config
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // Hanldebars Config
 var exphbs = require('express-handlebars');
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 
 //=================== Mongoose ===================
@@ -27,19 +31,19 @@ app.set('view engine', 'handlebars');
 var Promise = require('bluebird');
 mongoose.Promise = Promise;
 // Database configuration with mongoose
-var uristring =  "mongodb://heroku_52ft34g8:dt67ql648ors7978n91vie8k03@ds149603.mlab.com:49603/heroku_52ft34g8" ||
-                "mongodb://localhost/mongoosecheerio";
+var uristring = "mongodb://heroku_52ft34g8:dt67ql648ors7978n91vie8k03@ds149603.mlab.com:49603/heroku_52ft34g8" ||
+  "mongodb://localhost/mongoosecheerio";
 // New Mongoose connection logic                
 mongoose.connect(uristring, {
   useMongoClient: true
 });
 var db = mongoose.connection;
 // Show any mongoose errors
-db.on("error", function(error) {
+db.on("error", function (error) {
   console.log("Mongoose Error: ", error);
 });
 // Once logged in to the db through mongoose, log a success message
-db.once("open", function() {
+db.once("open", function () {
   console.log("Mongoose connection successful.");
 });
 //=================================================

@@ -14,17 +14,17 @@
   src: url(../fonts/GatsbyFLF.ttf);
 }
 
-@font-face{
+@font-face {
   font-family: "cassannet";
   src: url("../fonts/../fonts/cassannet.ttf")
 }
 
-@font-face{
+@font-face {
   font-family: "Kano";
   src: url("../fonts/../fonts/Kano.otf")
 }
 
-@font-face{
+@font-face {
   font-family: "Woman";
   src: url("../fonts/../fonts/LongCoolWoman.ttf")
 }
@@ -41,9 +41,12 @@ body {
   letter-spacing: .3em;
 }
 
+.clearButton {
+  display: none;
+}
+
 .progress-button {
   position: relative;
-  display: inline-block;
   padding: 1px 60px;
   outline: none;
   border: none;
@@ -79,7 +82,6 @@ i {
   margin-bottom: 20px;
   font-size: 1em;
 }
-
 
 .navbar {
   margin-bottom: 0px;
@@ -124,11 +126,11 @@ li {
 }
 
 .panel {
-  border:none;
+  border: none;
 }
 
 .btn {
-  margin-top: 8px;
+  margin: 5px 0;
 }
 
 #saveText {
@@ -136,24 +138,25 @@ li {
 }
 
 #savedHeader {
-  letter-spacing:1.2em;
+  letter-spacing: 1.2em;
   text-indent: .5em;
   color: black;
   font-family: "Woman";
   margin-top: 40px;
-  
 }
 
 hr.style12 {
-	height: 6px;
-	background: url(http://ibrahimjabbari.com/english/images/hr-12.png) repeat-x 0 0;
-    border: 0;
+  height: 6px;
+  background: url(http://ibrahimjabbari.com/english/images/hr-12.png) repeat-x 0 0;
+  border: 0;
 }
 
-.readButton {
+.readButton,
+.viewButton,
+.deleteButton {
   color: #fff;
-  background-color: rgba(106, 65, 11, 0.6);
-  border-color: rgba(130, 79, 15, 0.5);
+  background-color: rgba(1, 79, 19, 0.4);
+  border-color: rgba(1, 79, 19, 0.3);
 }
 
 .saveButton {
@@ -203,6 +206,7 @@ h3.panel-title {
   font-size: 83px;
 }
 
+
 /* ================== Media Queries ======================= */
 
 @media (max-width:767px) {
@@ -210,7 +214,6 @@ h3.panel-title {
   .navbar-nav {
     margin: 0 auto;
   }
-
   #jumboText {
     font-size: 63px;
   }
@@ -228,14 +231,12 @@ h3.panel-title {
     float: none !important;
     text-align: center;
   }
-
   .headerArcs {
     letter-spacing: .8em;
     text-indent: .4em;
     margin-bottom: 0px;
     font-size: .8em;
   }
-  
   .headerArcs2 {
     letter-spacing: .6em;
     text-indent: .3em;
@@ -243,20 +244,15 @@ h3.panel-title {
     margin-bottom: 0px;
     font-size: .8em;
   }
-
   h1 {
-    margin:15px 0 0 0;
+    margin: 15px 0 0 0;
     letter-spacing: 1em;
     text-indent: .5em;
   }
-
   #jumboText {
     font-size: 43px;
   }
-
 }
-
-
 
 
 /* Buzz Out Animation on Reddit Icon */
@@ -425,8 +421,9 @@ h3.panel-title {
 
 
 /* Bounce To Right */
+
 .hvr-bounce-to-right {
-  display: inline-block;
+  /* display: inline-block; */
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
@@ -437,6 +434,7 @@ h3.panel-title {
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
 }
+
 .hvr-bounce-to-right:before {
   content: "";
   position: absolute;
@@ -458,15 +456,22 @@ h3.panel-title {
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-.hvr-bounce-to-right:hover, .hvr-bounce-to-right:focus, .hvr-bounce-to-right:active {
+
+.hvr-bounce-to-right:hover,
+.hvr-bounce-to-right:focus,
+.hvr-bounce-to-right:active {
   color: white;
 }
-.hvr-bounce-to-right:hover:before, .hvr-bounce-to-right:focus:before, .hvr-bounce-to-right:active:before {
+
+.hvr-bounce-to-right:hover:before,
+.hvr-bounce-to-right:focus:before,
+.hvr-bounce-to-right:active:before {
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
   transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
+
 
 /* Bounce To Left */
 
@@ -543,8 +548,8 @@ h3.panel-title {
 }
 
 
-
 /* Sweep To Bottom */
+
 .hvr-sweep-to-bottom {
   display: inline-block;
   vertical-align: middle;
@@ -557,6 +562,7 @@ h3.panel-title {
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
+
 .hvr-sweep-to-bottom:before {
   content: "";
   position: absolute;
@@ -578,10 +584,16 @@ h3.panel-title {
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-.hvr-sweep-to-bottom:hover, .hvr-sweep-to-bottom:focus, .hvr-sweep-to-bottom:active {
+
+.hvr-sweep-to-bottom:hover,
+.hvr-sweep-to-bottom:focus,
+.hvr-sweep-to-bottom:active {
   color: white;
 }
-.hvr-sweep-to-bottom:hover:before, .hvr-sweep-to-bottom:focus:before, .hvr-sweep-to-bottom:active:before {
+
+.hvr-sweep-to-bottom:hover:before,
+.hvr-sweep-to-bottom:focus:before,
+.hvr-sweep-to-bottom:active:before {
   -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }

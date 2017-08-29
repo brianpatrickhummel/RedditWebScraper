@@ -1,4 +1,3 @@
-
 // If any article from database is displayed on screen, delete the Prompt to Scrape
 if (document.querySelector(".mongoArticles")) {
   $(".emtpyPlaceholder").remove();
@@ -12,9 +11,9 @@ var headerArc2 = new CircleType(document.getElementById('headerArc2')).radius(18
 //*************** Button click to Intialize Scraping ***************
 $(document).on("click", ".scrapeButton", function () {
   $.ajax({
-    method: "GET",
-    url: "/scrape"
-  })
+      method: "GET",
+      url: "/scrape"
+    })
     .done(function () {
       window.location.href = '/';
     });
@@ -24,9 +23,9 @@ $(document).on("click", ".scrapeButton", function () {
 $(document).on("click", ".saveButton", function () {
   var thisId = $(this).attr("id");
   $.ajax({
-    method: "POST",
-    url: "/save/" + thisId
-  })
+      method: "POST",
+      url: "/save/" + thisId
+    })
     .done(function () {
       // refreshes the page and makes a GET call for all unsaved articles
       window.location.href = '/';
@@ -37,9 +36,9 @@ $(document).on("click", ".saveButton", function () {
 $(document).on("click", ".deleteButton", function () {
   var thisId = $(this).attr("id");
   $.ajax({
-    method: "DELETE",
-    url: "/delete/" + thisId
-  })
+      method: "DELETE",
+      url: "/delete/" + thisId
+    })
     .done(function () {
       // refreshes the page and makes a GET call for all saved articles
       window.location.href = "/savedArticles";
@@ -53,16 +52,16 @@ $('#addNoteModal').on('show.bs.modal', function (event) {
   // Removes the existing DOM Modal panels from previous query
   $(".articleNotes").remove();
   // Identify Button that triggered the modal
-  var button = $(event.relatedTarget) 
+  var button = $(event.relatedTarget)
   // Extract article id from data-id attribute
-  var articleId = button.data('id') 
+  var articleId = button.data('id')
   // console.log("client-side: clicked button id= " + articleId);
 
   // Get a single article including it's notes
   $.ajax({
-    method: "GET",
-    url: "/singleArticleNotes/" + articleId
-  })
+      method: "GET",
+      url: "/singleArticleNotes/" + articleId
+    })
     .done(function (result) {
       // jQuery update the Bootstrap Modal
       for (var i = 0; i < result.note.length; i++) {
@@ -94,13 +93,13 @@ $('#addNoteModal').on('show.bs.modal', function (event) {
       // *************** Button click to Save a Note ***************
       $(document).on("click", ".saveNoteButton", function () {
         $.ajax({
-          method: "PUT",
-          url: "/saveNote/" + articleId,
-          data: {
-            // Value taken from note textarea
-            body: $("#comment").val()
-          }
-        })
+            method: "PUT",
+            url: "/saveNote/" + articleId,
+            data: {
+              // Value taken from note textarea
+              body: $("#comment").val()
+            }
+          })
           .done(function () {
             // clear the typed note
             $("#comment").val("");
@@ -113,21 +112,12 @@ $('#addNoteModal').on('show.bs.modal', function (event) {
         var deleteId = $(this).attr("id");
         console.log("Note ID to be deleted: " + deleteId);
         $.ajax({
-          method: "DELETE",
-          url: "/deleteNote/" + deleteId + "/" + articleId,
-        })
+            method: "DELETE",
+            url: "/deleteNote/" + deleteId + "/" + articleId,
+          })
           .done(function () {
             window.location.href = "/savedArticles";
           });
       });
     });
 });
-
-
-
-
-
-
-
-
-

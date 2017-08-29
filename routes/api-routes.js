@@ -38,7 +38,9 @@ module.exports = function (app) {
         // Declaring a funtion to check the current article against the db
         // If an article with an identical title is found, article is not added
         function duplicateCheck(article) {
-          Article.find({ title: article.title }, function (err, article) {
+          Article.find({
+            title: article.title
+          }, function (err, article) {
             if (article.length) {
               console.log("duplicate article, not added");
             } else {
@@ -46,8 +48,7 @@ module.exports = function (app) {
               entry.save(function (err, article) {
                 if (err) {
                   console.log(err);
-                }
-                else {
+                } else {
                   // console.log("article: ", article);
                 }
               });
@@ -67,9 +68,10 @@ module.exports = function (app) {
     Article.find({}, function (error, doc) {
       if (error) {
         console.log(error);
-      }
-      else {
-        var articles = { article: doc };
+      } else {
+        var articles = {
+          article: doc
+        };
         res.render("index", articles)
       }
     });
@@ -83,9 +85,10 @@ module.exports = function (app) {
       .exec(function (error, doc) {
         if (error) {
           console.log(error);
-        }
-        else {
-          var articles = { article: doc };
+        } else {
+          var articles = {
+            article: doc
+          };
           res.render("saved", articles)
         }
       });
@@ -94,11 +97,16 @@ module.exports = function (app) {
   // ******************* Save an article *******************
   app.post("/save/:id", function (req, res) {
     // Find article based on ID passed with req on POST and mark as having been SAVED
-    Article.update({ "_id": req.params.id }, { $set: { saved: true } }, function (error, doc) {
+    Article.update({
+      "_id": req.params.id
+    }, {
+      $set: {
+        saved: true
+      }
+    }, function (error, doc) {
       if (error) {
         console.log(error);
-      }
-      else {
+      } else {
         res.render("index");
       }
     });
@@ -107,24 +115,29 @@ module.exports = function (app) {
   // ******************* Delete selected Article *******************
   app.delete("/delete/:id", function (req, res) {
     //Find the specific article so we can access the associated Notes
-    Article.findById({ "_id": req.params.id }, function (err, object) {
-      if (err) { console.error(err) }
-      else {
+    Article.findById({
+      "_id": req.params.id
+    }, function (err, object) {
+      if (err) {
+        console.error(err)
+      } else {
         var notes = object.note;
         // Remove each associated Note from database
         for (var i = 0; i < notes.length; i++) {
           var noteId = notes[i];
-          Note.remove({ "_id": noteId }, function (error, doc) {
+          Note.remove({
+            "_id": noteId
+          }, function (error, doc) {
             if (error) {
               console.log(error);
-            }
-            else {
+            } else {
               // Now that all Notes are Removed, Remove the Article
-              Article.remove({ "_id": req.params.id }, function (error, doc) {
+              Article.remove({
+                "_id": req.params.id
+              }, function (error, doc) {
                 if (error) {
                   console.log(error);
-                }
-                else {
+                } else {
                   console.log("Note " + req.params.id + " was deleted")
                 }
               });
@@ -144,17 +157,23 @@ module.exports = function (app) {
       if (error) {
         // Error will be logged if text is not entered into textfield upon submit
         console.log(error);
-      }
-      else {
+      } else {
         // Use the article id to find and update it's note
-        Article.findByIdAndUpdate(req.params.id, { $push: { "note": doc._id } }, { new: true })
+        Article.findByIdAndUpdate(req.params.id, {
+            $push: {
+              "note": doc._id
+            }
+          }, {
+            new: true
+          })
           // Execute the above query
           .exec(function (err, doc) {
             if (err) {
               console.log(err);
-            }
-            else {
-              var note = { "Note": doc };
+            } else {
+              var note = {
+                "Note": doc
+              };
               res.render("saved", note);
             }
           });
@@ -165,14 +184,23 @@ module.exports = function (app) {
 
   // Delete selected Note
   app.delete("/deleteNote/:deleteId/:articleId", function (req, res) {
-    Note.findOneAndRemove({ "_id": req.params.deleteId })
+    Note.findOneAndRemove({
+        "_id": req.params.deleteId
+      })
       .exec(function (err, removed) {
-        Article.findOneAndUpdate(
-          { "_id": req.params.articleId },
-          { $pull: { note: req.params.deleteId } },
-          { new: true },
+        Article.findOneAndUpdate({
+            "_id": req.params.articleId
+          }, {
+            $pull: {
+              note: req.params.deleteId
+            }
+          }, {
+            new: true
+          },
           function (err, removedFromArticle) {
-            if (err) { console.error(err) }
+            if (err) {
+              console.error(err)
+            }
             res.status(200).send(removedFromArticle)
           })
       });
@@ -181,14 +209,15 @@ module.exports = function (app) {
 
   // ******************* Get Single Article Notes *******************
   app.get("/singleArticleNotes/:id", function (req, res) {
-    Article.findById({ "_id": req.params.id })
+    Article.findById({
+        "_id": req.params.id
+      })
       .populate("note")
       // now, execute our query
       .exec(function (error, doc) {
         if (error) {
           console.log(error);
-        }
-        else {
+        } else {
           res.json(doc);
           // console.log("server-side return of article with notes" + doc.note);
         }
@@ -196,9 +225,3 @@ module.exports = function (app) {
   });
 
 }
-
-
-
-
-
-
