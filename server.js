@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Hanldebars Config
+// Handlebars Config
 var exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs({
   defaultLayout: 'main'
