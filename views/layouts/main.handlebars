@@ -1,54 +1,62 @@
 <!doctype html>
 <html>
-  <head>
-    <title>r/JS Scraper</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-      <!-- FontAwesome --> 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-      <!-- Bootstrap JavaScript -->
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>
-      <!-- Bootstrap compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-  </head>
-  <body>
-    <nav class="navbar navbar-default" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+
+<head>
+  <title>r/JS Scraper</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <!-- FontAwesome -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous">
+  <!-- Bootstrap JavaScript -->
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa'
+    crossorigin='anonymous'></script>
+  <!-- Bootstrap compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-      </div>
+    </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse navbar-ex1-collapse text-center">
-        <ul class="nav navbar-nav">
-          <li>
-            <a href="/"><i class="fa fa-reddit-alien fa-2x hvr-buzz-out homeButton" aria-hidden="true"></i></a>
-          </li>
-          <li>
-            <a href="/savedArticles" class="saved"><span class="content savedText hvr-grow">SAVED ARTICLES</span></a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <button class="progress-button scrapeButton hvr-bounce-to-left" data-style="shrink" data-perspective data-horizontal>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse text-center">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="/"><i class="fa fa-reddit-alien fa-2x hvr-buzz-out homeButton" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="/savedArticles" class="saved"><span class="content savedText hvr-grow">SAVED ARTICLES</span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <button class="progress-button scrapeButton hvr-bounce-to-left" data-style="shrink" data-perspective data-horizontal>
               <span class="content">SCRAPE!</span>
             </button>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </nav>
-    {{{body}}}
-     <!-- CircleType.js -->
-    <script src="assets/js/circletype.min.js"></script>
-      <!-- Custom JS -->
-    <script src="/assets/js/app.js"></script>
-  </body>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </nav>
+  {{{body}}}
+  <!-- CircleType.js -->
+  <script src="assets/js/circletype.min.js"></script>
+  <!-- Custom JS -->
+  <script src="/assets/js/app.js"></script>
+</body>
+
 </html>

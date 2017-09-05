@@ -4,70 +4,68 @@
       <h5 class="headerArcs" id="headerArc">THE WORLD RENOWNED</h5>
       <h5 class="headerArcs2" id="headerArc2">JAVASCRIPT SUBREDDIT</h5>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h1 id="jumboText">SCRAPER</h1>
-       <h4 id="savedHeader"><strong>ALL SAVED • ARTICLES</strong></h4>
+      <h4 id="savedHeader"><strong>ALL SAVED • ARTICLES</strong></h4>
     </div>
   </div>
 </div>
 <div class="container-fluid">
-  <div class="row"> 
-      <div class="container articlesContainer col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-        <div id="articles">
-          {{#unless article}}
-            <div class="text-center animated pulse infinite emtpyPlaceholder">
-              <h3>CLICK THE <span id="saveText">SAVE ARTICLE</span> BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
-            </div>
-          {{/unless}}
-          {{#each article}}
-            {{#if this.saved}}  
-              <!-- Only display articles that have been SAVED -->
-              <div class="panel panel-default mongoArticles">
-                <div class="panel-heading clearfix">
-                  <h3 class="panel-title pull-left">{{this.title}}</h3>
-                  <div class="pull-right">
-                    <button type="button" class="btn readButton hvr-bounce-to-left" id="{{this._id}}">
+  <div class="row">
+    <div class="container articlesContainer col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+      <div id="articles">
+        {{#unless article}}
+        <div class="text-center animated pulse infinite emtpyPlaceholder">
+          <h3>CLICK THE <span id="saveText">SAVE ARTICLE</span> BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
+        </div>
+        {{/unless}} {{#each article}} {{#if this.saved}}
+        <!-- Only display articles that have been SAVED -->
+        <div class="panel panel-default mongoArticles">
+          <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">{{this.title}}</h3>
+            <div class="pull-right">
+              <button type="button" class="btn readButton hvr-bounce-to-left" id="{{this._id}}">
                       <a href="http://{{this.link}}" target="_blank">READ ARTICLE</a>
                     </button>
-                      <!-- add Mongo _id for each article so that it can be targeted for saving -->
-                      <!-- also sets each VIEW NOTES button as a trigger for the Bootstrap Modal-->
-                    <button type="button" class="btn  viewButton hvr-sweep-to-bottom" id="{{this._id}}" data-toggle="modal" data-target="#addNoteModal" data-id="{{this._id}}">VIEW NOTES</button>
-                    <button type="button" class="btn  deleteButton hvr-bounce-to-right" id="{{this._id}}">DELETE ARTICLE</button>
-                  </div>
-                </div>
-              </div>
-            {{/if}}
-          {{/each}}
-          <!-- Boostrap Modal Dialog Box -->
-          <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header text-center">
-                  <h5 class="modal-title" id="exampleModalLabel">ARTICLE NOTES</h5>
-                  <button type="button" class="close closed" data-dismiss="modal" aria-label="Close">
+              <!-- add Mongo _id for each article so that it can be targeted for saving -->
+              <!-- also sets each VIEW NOTES button as a trigger for the Bootstrap Modal-->
+              <button type="button" class="btn  viewButton hvr-sweep-to-bottom" id="{{this._id}}" data-toggle="modal" data-target="#addNoteModal"
+                data-id="{{this._id}}">VIEW NOTES</button>
+              <button type="button" class="btn  deleteButton hvr-bounce-to-right" id="{{this._id}}">DELETE ARTICLE</button>
+            </div>
+          </div>
+        </div>
+        {{/if}} {{/each}}
+        <!-- Boostrap Modal Dialog Box -->
+        <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h5 class="modal-title" id="exampleModalLabel">ARTICLE NOTES</h5>
+                <button type="button" class="close closed" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                </div>
-                <div class="modal-body">
-                  <p class="notePlaceholder text-center">No Saved Notes For This Article Just Yet</p>
+              </div>
+              <div class="modal-body">
+                <p class="notePlaceholder text-center">No Saved Notes For This Article Just Yet</p>
 
-                  <!-- panels to be jQuery inserted for each note linked to article via app.js-->
+                <!-- panels to be jQuery inserted for each note linked to article via app.js-->
 
-                  <div class="form-group">
-                    <label for="comment">Create a note for this article:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
-                  </div>
+                <div class="form-group">
+                  <label for="comment">Create a note for this article:</label>
+                  <textarea class="form-control" rows="5" id="comment"></textarea>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-success saveNoteButton hvr-bounce-to-left">SAVE NOTE</button>
-                  <button type="button" class="closed btn btn-secondary hvr-bounce-to-right" data-dismiss="modal">CLOSE</button>
-                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success saveNoteButton hvr-bounce-to-left">SAVE NOTE</button>
+                <button type="button" class="closed btn btn-secondary hvr-bounce-to-right" data-dismiss="modal">CLOSE</button>
               </div>
             </div>
           </div>
-          <!-- End Modal -->
-        </div> 
+        </div>
+        <!-- End Modal -->
       </div>
-    </div>   
+    </div>
   </div>
+</div>
 </div>
