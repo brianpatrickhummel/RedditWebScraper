@@ -1,6 +1,6 @@
 # Javascript Sub-Reddit Scraper
 
-A Node.js application that scrapes reddit articles from the Javascript sub-reddit.  Users can save articles and then leave comments.  Articles and comments are stored in a MySQL database. Uses the Mongoose, Handlebars and Cheerio NPM libraries. 
+A Node.js application that scrapes reddit articles from the Javascript sub-reddit.  Users can save articles and then leave comments.  Articles and comments are stored in MongoDB via mLab. Uses the Mongoose, Handlebars and Cheerio NPM libraries. 
 
 ### Details:
 * Server and API is built with Node.js using the Express Framework.   
