@@ -1,4 +1,5 @@
 // If any article from database is displayed on screen, delete the Prompt to Scrape
+$(".loaderImage, .overlay").hide();
 
 let articles = [];
 if (document.querySelector(".mongoArticles")) {
@@ -11,11 +12,14 @@ var headerArc2 = new CircleType(document.getElementById("headerArc2")).radius(18
 
 //*************** Button click to Initialize Scraping ***************
 $(document).on("click", ".scrapeButton", function() {
+  $(".emtpyPlaceholder").hide();
+  $(".loaderImage, .overlay").show();
   $.ajax({
     method: "GET",
     url: "/scrape"
   }).done(function(articles) {
     window.location.href = "/";
+    $(".loaderImage, .overlay").hide();
   });
 });
 
@@ -30,7 +34,7 @@ $(document).on("click", ".saveButton", function() {
     url: "/save/" + thisId
   }).done(function() {
     // refreshes the page and makes a GET call for all unsaved articles
-    window.location.href = "/";
+    // window.location.href = "/";
   });
 });
 
@@ -54,10 +58,8 @@ $("#addNoteModal").on("show.bs.modal", function(event) {
   $(".articleNotes").remove();
   // Identify Button that triggered the modal
   var button = $(event.relatedTarget);
-  console.log(button);
   // Extract article id from data-id attribute
   var articleId = button.data("id");
-  console.log("client-side: clicked button id= " + articleId);
 
   // Get a single article including it's notes
   $.ajax({

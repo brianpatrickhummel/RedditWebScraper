@@ -44,7 +44,6 @@ module.exports = function(app) {
         }
         articles.push(articleResult);
       });
-
       res.render("index", { articles });
     });
   });
@@ -100,6 +99,10 @@ module.exports = function(app) {
 
   // ******************* Delete selected Article *******************
   app.delete("/delete/:id/:articleKey", async (req, res) => {
+    let index = req.params.articleKey;
+    console.log("index= ", index);
+    console.log("articles[0]:", articles[0]);
+    articles[index].saved = false;
     //Find the specific article so we can access the associated Notes
     await Article.findById(
       {

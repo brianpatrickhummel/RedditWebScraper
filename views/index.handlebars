@@ -15,7 +15,8 @@
   <div class="row">
     <div class="container articlesContainer col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
       <div id="articles">
-        {{#unless article}}
+        <div class="overlay"></div>
+        <img class="loaderImage loading" style="color: black;" src="../assets/images/puff.svg" alt="loaderImage"> {{#unless article}}
         <div class="text-center animated pulse infinite emtpyPlaceholder">
           <h3>CLICK THE
             <span id="saveText">SCRAPE BUTTON</span> TO LOAD ARTICLES</h3>
