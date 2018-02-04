@@ -6,7 +6,9 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h1 id="jumboText">SCRAPER</h1>
-      <h4 id="savedHeader"><strong>ALL SAVED • ARTICLES</strong></h4>
+      <h4 id="savedHeader">
+        <strong>ALL SAVED • ARTICLES</strong>
+      </h4>
     </div>
   </div>
 </div>
@@ -16,7 +18,8 @@
       <div id="articles">
         {{#unless article}}
         <div class="text-center animated pulse infinite emtpyPlaceholder">
-          <h3>CLICK THE <span id="saveText">SAVE ARTICLE</span> BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
+          <h3>CLICK THE
+            <span id="saveText">SAVE ARTICLE</span> BUTTON ON HOME PAGE TO SAVE ARTICLES</h3>
         </div>
         {{/unless}} {{#each article}} {{#if this.saved}}
         <!-- Only display articles that have been SAVED -->
@@ -24,27 +27,32 @@
           <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left">{{this.title}}</h3>
             <div class="pull-right">
-              <button type="button" class="btn readButton hvr-bounce-to-left" id="{{this._id}}">
-                      <a href="{{this.link}}" target="_blank">READ ARTICLE</a>
-                    </button>
+
+              <a class="btn readButton hvr-bounce-to-left" id="{{this._id}}" href="{{this.link}}" target="_blank">READ ARTICLE</a>
+
               <!-- add Mongo _id for each article so that it can be targeted for saving -->
               <!-- also sets each VIEW NOTES button as a trigger for the Bootstrap Modal-->
-              <button type="button" class="btn  viewButton hvr-sweep-to-bottom" id="{{this._id}}" data-toggle="modal" data-target="#addNoteModal"
-                data-id="{{this._id}}">VIEW NOTES</button>
-              <button type="button" class="btn  deleteButton hvr-bounce-to-right" id="{{this._id}}">DELETE ARTICLE</button>
+              <button type="button" class="btn  viewButton hvr-sweep-to-bottom" id="{{@key}}" data-toggle="modal" data-target="#addNoteModal"
+                data-id="{{this._id}}">VIEW NOTES
+              </button>
+
+              <button type="button" class="btn  deleteButton hvr-bounce-to-right" data-id="{{this._id}}" id="{{@key}}">
+                DELETE ARTICLE
+              </button>
             </div>
           </div>
         </div>
         {{/if}} {{/each}}
-        <!-- Boostrap Modal Dialog Box -->
-        <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Bootstrap Modal Dialog Box -->
+        <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header text-center">
                 <h5 class="modal-title" id="exampleModalLabel">ARTICLE NOTES</h5>
                 <button type="button" class="close closed" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
               <div class="modal-body">
                 <p class="notePlaceholder text-center">No Saved Notes For This Article Just Yet</p>
