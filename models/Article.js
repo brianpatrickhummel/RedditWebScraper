@@ -14,11 +14,14 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  key: String,
   // This only saves one note's ObjectId, ref refers to the Note model
-  note: [{
-    type: Schema.Types.ObjectId,
-    ref: "Note"
-  }],
+  note: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Note"
+    }
+  ],
   saved: {
     type: Boolean,
     default: false

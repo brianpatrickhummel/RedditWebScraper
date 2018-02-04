@@ -3,20 +3,21 @@ var request = require("request");
 var cheerio = require("cheerio");
 var Note = require("../models/Note.js");
 var Article = require("../models/Article.js");
+let articles = [];
 
-module.exports = function (app) {
-  // ******************* Scrape data and add to MongoDB *******************
-  app.get("/scrape", function (req, res) {
+module.exports = function(app) {
+  app.get("/", function(req, res) {
+    res.render("index", { articles });
+  });
+
+  app.get("/scrape", function(req, res) {
+    articles = [];
     // First, we grab the body of the html with request
-    request("https://www.reddit.com/r/javascript/", function (
-      error,
-      response,
-      html
-    ) {
+    request("https://www.reddit.com/r/javascript/", function(error, response, html) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(html);
       // Now, we grab every <p> with a class = "title" and do the following....
-      $("p.title").each(function (i, element) {
+      $("p.title").each(function(i, element) {
         // Save an empty result object
         var articleResult = {};
         // Add the text and href of every link, and save them as properties of the result object
@@ -27,6 +28,7 @@ module.exports = function (app) {
         articleResult.link = $(this)
           .children("a")
           .attr("href");
+        articleResult.saved = false;
 
         // Discovered that some of the articles link directly back to the javascript subreddit
         // Within the <p> there is a <span> that contains URL domain information
@@ -40,61 +42,19 @@ module.exports = function (app) {
         if (domain === "(self.javascript)") {
           articleResult.link = "http://www.reddit.com" + articleResult.link;
         }
-
-        // Using our Article model, create a new entry
-        // This effectively passes the result object to the entry (and the title and link)
-        var entry = new Article(articleResult);
-
-        // Declaring a funtion to check the current article against the db
-        // If an article with an identical title is found, article is not added
-        function duplicateCheck(article) {
-          Article.find({
-              title: article.title
-            },
-            function (err, article) {
-              if (article.length) {
-                console.log("duplicate article, not added");
-              } else {
-                // Article is not a duplcate, save it to DB
-                entry.save(function (err, article) {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    // console.log("article: ", article);
-                  }
-                });
-              }
-            }
-          );
-        }
-        // Calling the duplicate checking function and passing in new Article instance
-        duplicateCheck(entry);
+        articles.push(articleResult);
       });
-      res.redirect("back");
-    });
-  });
 
-  // ******************* Get All Unsaved Articles *******************
-  app.get("/", function (req, res) {
-    // Grab every doc in the Articles array
-    Article.find({}, function (error, doc) {
-      if (error) {
-        console.log(error);
-      } else {
-        var articles = {
-          article: doc
-        };
-        res.render("index", articles);
-      }
+      res.render("index", { articles });
     });
   });
 
   // ******************* Get All Saved articles *******************
-  app.get("/savedArticles", function (req, res) {
+  app.get("/savedArticles", function(req, res) {
     Article.find({})
       .populate("note")
       // now, execute query
-      .exec(function (error, doc) {
+      .exec(function(error, doc) {
         if (error) {
           console.log(error);
         } else {
@@ -107,88 +67,100 @@ module.exports = function (app) {
   });
 
   // ******************* Save an article *******************
-  app.post("/save/:id", function (req, res) {
-    // Find article based on ID passed with req on POST and mark as having been SAVED
-    Article.update({
-        _id: req.params.id
-      }, {
-        $set: {
-          saved: true
+  app.post("/save/:id", function(req, res) {
+    articles[req.params.id].saved = true;
+    articles[req.params.id].key = req.params.id;
+
+    var entry = new Article(articles[req.params.id]);
+    function duplicateCheck(article) {
+      Article.find(
+        {
+          title: article.title
+        },
+        function(err, article) {
+          if (article.length) {
+            console.log("duplicate article, not added");
+          } else {
+            // Article is not a duplcate, save it to DB
+            entry.save(function(err, article) {
+              if (err) {
+                console.log(err);
+              } else {
+                // console.log("article: ", article);
+              }
+            });
+          }
         }
-      },
-      function (error, doc) {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("index");
-        }
-      }
-    );
+      );
+    }
+    // Calling the duplicate checking function and passing in new Article instance
+    duplicateCheck(entry);
+    res.redirect("back");
   });
 
   // ******************* Delete selected Article *******************
-  app.delete("/delete/:id", function (req, res) {
+  app.delete("/delete/:id/:articleKey", async (req, res) => {
     //Find the specific article so we can access the associated Notes
-    Article.findById({
+    await Article.findById(
+      {
         _id: req.params.id
       },
-      function (err, object) {
+      function(err, object) {
         if (err) {
-          console.error(err);
-        } else {
-          var notes = object.note;
+          return console.error(err);
+        }
+        var notes = object.note;
+        if (notes.length) {
           // Remove each associated Note from database
           for (var i = 0; i < notes.length; i++) {
             var noteId = notes[i];
-            Note.remove({
+            Note.remove(
+              {
                 _id: noteId
               },
-              function (error, doc) {
+              function(error, doc) {
                 if (error) {
                   console.log(error);
-                } else {
-                  // Now that all Notes are Removed, Remove the Article
-                  Article.remove({
-                      _id: req.params.id
-                    },
-                    function (error, doc) {
-                      if (error) {
-                        console.log(error);
-                      } else {
-                        console.log("Note " + req.params.id + " was deleted");
-                      }
-                    }
-                  );
-                }
+                } else console.log("notes deleted");
               }
             );
           }
         }
       }
     );
+
+    await Article.findByIdAndRemove(req.params.id, function(error, doc) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("article " + req.params.id + " was deleted");
+      }
+    });
     res.sendStatus(200);
   });
 
   // ******************* Add New Note *******************
-  app.put("/saveNote/:id", function (req, res) {
+  app.put("/saveNote/:id", async (req, res) => {
     var newNote = new Note(req.body);
-    newNote.save(function (error, doc) {
+    await newNote.save(function(error, doc) {
       if (error) {
         // Error will be logged if text is not entered into textfield upon submit
         console.log(error);
       } else {
         // Use the article id to find and update it's note
         Article.findByIdAndUpdate(
-            req.params.id, {
-              $push: {
-                note: doc._id
-              }
-            }, {
-              new: true
+          req.params.id,
+          {
+            $push: {
+              note: doc._id
             }
-          )
+          },
+          {
+            new: true
+          }
+        )
           // Execute the above query
-          .exec(function (err, doc) {
+          .exec(function(err, doc) {
             if (err) {
               console.log(err);
             } else {
@@ -203,20 +175,23 @@ module.exports = function (app) {
   });
 
   // Delete selected Note
-  app.delete("/deleteNote/:deleteId/:articleId", function (req, res) {
+  app.delete("/deleteNote/:deleteId/:articleId", function(req, res) {
     Note.findOneAndRemove({
       _id: req.params.deleteId
-    }).exec(function (err, removed) {
-      Article.findOneAndUpdate({
+    }).exec(function(err, removed) {
+      Article.findOneAndUpdate(
+        {
           _id: req.params.articleId
-        }, {
+        },
+        {
           $pull: {
             note: req.params.deleteId
           }
-        }, {
+        },
+        {
           new: true
         },
-        function (err, removedFromArticle) {
+        function(err, removedFromArticle) {
           if (err) {
             console.error(err);
           }
@@ -227,13 +202,14 @@ module.exports = function (app) {
   });
 
   // ******************* Get Single Article Notes *******************
-  app.get("/singleArticleNotes/:id", function (req, res) {
+  app.get("/singleArticleNotes/:id", function(req, res) {
+    console.log("get note: ", req.params.id);
     Article.findById({
-        _id: req.params.id
-      })
+      _id: req.params.id
+    })
       .populate("note")
       // now, execute our query
-      .exec(function (error, doc) {
+      .exec(function(error, doc) {
         if (error) {
           console.log(error);
         } else {
